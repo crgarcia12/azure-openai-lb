@@ -3,7 +3,5 @@
 # Manually managing azure-functions-worker may cause unexpected issues
 
 azure-functions
-#openai
-#pydantic==1.8
 langchain-openai
 litellm
