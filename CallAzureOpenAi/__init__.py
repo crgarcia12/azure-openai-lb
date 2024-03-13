@@ -21,6 +21,8 @@ clients = [
     )
 ]
 
+lastthrottling = []
+
 openai_client_index = 0
 
 def get_openai_client():
@@ -37,12 +39,12 @@ def main(req: HttpRequest) -> HttpResponse:
     index = get_openai_client()
     client = clients[index]
 
-    response = client.embeddings.create(
-        input = "Your text string goes here",
-        model= "text-embedding-ada-002"
-    )
+    for num in range(1, 11):
+        response = client.embeddings.create(
+            input = "Your text string goes hereYour text string goes hereYour text string goes hereYour text string goes hereYour text string goes here",
+            model= "text-embedding-ada-002"
+        )
 
     print(response.model_dump_json(indent=2))
 
     return HttpResponse(f"We have used client {index}: {response.model_dump_json(indent=2)}.")
-    
