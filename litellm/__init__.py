@@ -10,17 +10,17 @@ model_list = [{ # list of model deployments
     "model_name": "text-embedding-ada-002", # model alias 
     "litellm_params": { # params for litellm completion/embedding call 
         "model": "azure/text-embedding-ada-002", # actual model name
-        "api_key": "9e109b9266b0496d990f194144a4fad4",
         "api_version": "2023-05-15",
-        "api_base":"https://crgar-openai-openai.openai.azure.com/"
+        "api_key": os.get_env("AZURE_OPENAI_API_KEY"),
+        "api_base": os.get_env("AZURE_OPENAI_ENDPOINT")
     }
 }, {
     "model_name": "text-embedding-ada-002", 
     "litellm_params": { # params for litellm completion/embedding call 
-        "model": "azure/2-text-embedding-ada-002", # actual model name
-        "api_key": "cd8db66561b74d42a418b50209b6dbef",
+        "model": "azure/text-embedding-ada-002", # actual model name
         "api_version": "2023-05-15",
-        "api_base":"https://crgar-openai-openai-sw.openai.azure.com/"
+        "api_key": os.get_env("AZURE_OPENAI_API_KEY"),
+        "api_base": os.get_env("AZURE_OPENAI_ENDPOINT")
     }
 }]
 

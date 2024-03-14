@@ -6,19 +6,15 @@ import os
 class OpenAIService:
     clients = [
         AsyncAzureOpenAI(
-            #api_key = os.getenv("AZURE_OPENAI_API_KEY"),  
             api_version = "2023-05-15",
-            #azure_endpoint =os.getenv("AZURE_OPENAI_ENDPOINT") 
-            api_key = "cd8db66561b74d42a418b50209b6dbef",
-            azure_endpoint ="https://crgar-openai-openai-sw.openai.azure.com/",
+            api_key = os.getenv("AZURE_OPENAI_API_KEY"),
+            azure_endpoint =os.getenv("AZURE_OPENAI_ENDPOINT"),
             max_retries=0
         ),
         AsyncAzureOpenAI(
-            #api_key = os.getenv("AZURE_OPENAI_API_KEY"),  
             api_version = "2023-05-15",
-            #azure_endpoint =os.getenv("AZURE_OPENAI_ENDPOINT") 
-            api_key = "cd8db66561b74d42a418b50209b6dbef",
-            azure_endpoint ="https://crgar-openai-openai-sw.openai.azure.com/",
+            api_key = os.getenv("AZURE_OPENAI_API_KEY"),  
+            azure_endpoint =os.getenv("AZURE_OPENAI_ENDPOINT"),
             max_retries=0
         )
     ]

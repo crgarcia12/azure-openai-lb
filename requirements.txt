@@ -5,3 +5,4 @@
 azure-functions
 langchain-openai
 litellm
+azure-servicebus
