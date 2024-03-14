@@ -12,6 +12,7 @@ def main(req: HttpRequest) -> HttpResponse:
         azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
         api_key =os.getenv("AZURE_OPENAI_API_KEY"),
         azure_deployment="text-embedding-ada-002",
+        max_retries=3 
         #openai_api_version="2023-05-15",
     )
 

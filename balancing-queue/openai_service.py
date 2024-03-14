@@ -31,15 +31,8 @@ class OpenAIService:
         pass
 
     def get_openai_client(self):
-        min_index = 0
-        min_calls = number_of_active_calls_per_endpoint[0]
-
-        for i in range(1, len(number_of_active_calls_per_endpoint)):
-            if number_of_active_calls_per_endpoint[i] < min_calls:
-                min_index = i
-                min_calls = number_of_active_calls_per_endpoint[i]
-
-        return (min_index, clients[min_index])
+        min_index = min(range(len(number_of_active_calls_per_endpoint)), key=number_of_active_calls_per_endpoint.__getitem__)
+        return min_index, clients[min_index]
     
     async def create_embeddings(self, operation_id):
         start_time = timeit.default_timer()
