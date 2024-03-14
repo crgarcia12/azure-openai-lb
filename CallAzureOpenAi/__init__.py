@@ -3,6 +3,7 @@ import os
 from openai import AzureOpenAI
 
 from azure.functions import HttpRequest, HttpResponse
+from litellm import Router
 
 clients = [
     AzureOpenAI(
@@ -31,7 +32,7 @@ def get_openai_client():
     openai_client_index = (openai_client_index + 1) % len(clients)
     return openai_client_index
 
-def main(req: HttpRequest) -> HttpResponse:
+async def main(req: HttpRequest) -> HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
     global clients
@@ -39,10 +40,18 @@ def main(req: HttpRequest) -> HttpResponse:
     index = get_openai_client()
     client = clients[index]
 
+    router = Router(
+        fallbacks=[{"azure/text-embedding-ada-002": ["azure/2-text-embedding-ada-002"]},
+                   {"azure/2-text-embedding-ada-002": ["azure/text-embedding-ada-002"]}],
+        model_list=model_list,
+        set_verbose=True,
+        debug_level="DEBUG",
+        num_retries=0) # you can even add debug_level="DEBUG"
+    
     for num in range(1, 11):
-        response = client.embeddings.create(
-            input = "Your text string goes hereYour text string goes hereYour text string goes hereYour text string goes hereYour text string goes here",
-            model= "text-embedding-ada-002"
+        response = await router.aembedding(
+            input = "Your text string goes here",
+            model= "text-embedding-ada-002",
         )
 
     print(response.model_dump_json(indent=2))

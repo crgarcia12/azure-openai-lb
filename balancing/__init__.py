@@ -6,4 +6,4 @@ from .openai_service import OpenAIService
 
 async def main(req: HttpRequest) -> HttpResponse:    
     service = OpenAIService()
-    return HttpResponse(f"Hello, {await service.create_embeddings()}. This HTTP triggered function executed successfully.")
+    return HttpResponse(f"{await service.create_parallel_embeddings()}")
