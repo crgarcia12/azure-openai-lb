@@ -29,6 +29,6 @@ async def main(req: HttpRequest) -> HttpResponse:
                     break
             # Send the batch of messages to the queue
             await sender.send_messages(batch_message)
-    print("Sent a batch of 10 messages")
+    logging.info("Sent a batch of 10 messages")
 
     return HttpResponse(f"Sent 10 messages to the queue")

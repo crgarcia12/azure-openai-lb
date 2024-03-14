@@ -1,4 +1,5 @@
 from openai import AsyncAzureOpenAI
+import logging
 import asyncio
 import random
 import os
@@ -7,14 +8,14 @@ class OpenAIService:
     clients = [
         AsyncAzureOpenAI(
             api_version = "2023-05-15",
-            api_key = os.getenv("AZURE_OPENAI_API_KEY"),
-            azure_endpoint =os.getenv("AZURE_OPENAI_ENDPOINT"),
+            api_key = os.environ["AZURE_OPENAI_API_KEY_1"],
+            azure_endpoint =os.environ["AZURE_OPENAI_ENDPOINT_1"],
             max_retries=0
         ),
         AsyncAzureOpenAI(
             api_version = "2023-05-15",
-            api_key = os.getenv("AZURE_OPENAI_API_KEY"),  
-            azure_endpoint =os.getenv("AZURE_OPENAI_ENDPOINT"),
+            api_key = os.environ["AZURE_OPENAI_API_KEY_2"],  
+            azure_endpoint =os.environ["AZURE_OPENAI_ENDPOINT_2"],
             max_retries=0
         )
     ]
@@ -46,7 +47,7 @@ class OpenAIService:
                 self.create_text_embeddings(index, client, counter))
             tasks.append(task)
             
-            print(f"we have used client nuber {index}")
+            logging.info(f"we have used client nuber {index}")
 
         results = await asyncio.gather(*tasks)
         return results[0]
@@ -68,9 +69,9 @@ class OpenAIService:
                 waiting_time = random.randint(10, 20)
                 total_waiting_time += waiting_time
                 retries += 1
-                print(f"[{counter}] failed with client {client_index}. waiting {waiting_time} seconds")
+                logging.info(f"[{counter}] failed with client {client_index}. waiting {waiting_time} seconds")
                 await asyncio.sleep(waiting_time)
 
-        print(f"[{counter}] succeeded with client {client_index} and {retries} retries and waiting {total_waiting_time} seconds.")
+        logging.info(f"[{counter}] succeeded with client {client_index} and {retries} retries and waiting {total_waiting_time} seconds.")
         return embedding_response.model_dump_json(indent=2)
     

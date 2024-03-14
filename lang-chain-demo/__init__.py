@@ -9,8 +9,8 @@ def main(req: HttpRequest) -> HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
     embeddings_model = AzureOpenAIEmbeddings(
-        azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
-        api_key =os.getenv("AZURE_OPENAI_API_KEY"),
+        azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT_2"],
+        api_key =os.environ["AZURE_OPENAI_API_KEY_1"],
         azure_deployment="text-embedding-ada-002",
         max_retries=3 
         #openai_api_version="2023-05-15",

@@ -11,16 +11,16 @@ model_list = [{ # list of model deployments
     "litellm_params": { # params for litellm completion/embedding call 
         "model": "azure/text-embedding-ada-002", # actual model name
         "api_version": "2023-05-15",
-        "api_key": os.environ["AZURE_OPENAI_API_KEY"],
-        "api_base": os.environ["AZURE_OPENAI_ENDPOINT"]
+        "api_key": os.environ["AZURE_OPENAI_API_KEY_1"],
+        "api_base": os.environ["AZURE_OPENAI_ENDPOINT_1"]
     }
 }, {
     "model_name": "text-embedding-ada-002", 
     "litellm_params": { # params for litellm completion/embedding call 
         "model": "azure/text-embedding-ada-002", # actual model name
         "api_version": "2023-05-15",
-        "api_key": os.environ["AZURE_OPENAI_API_KEY"],
-        "api_base": os.environ["AZURE_OPENAI_ENDPOINT"]
+        "api_key": os.environ["AZURE_OPENAI_API_KEY_2"],
+        "api_base": os.environ["AZURE_OPENAI_ENDPOINT_2"]
     }
 }]
 
@@ -45,8 +45,7 @@ async def main(req: HttpRequest) -> HttpResponse:
             model= "text-embedding-ada-002",
         )
 
-    #print(response.model_dump_json(indent=2))
-
+    #logging.info(response.model_dump_json(indent=2))
     return HttpResponse(f"We have used client: {response.model_dump_json(indent=2)}.")
 
 

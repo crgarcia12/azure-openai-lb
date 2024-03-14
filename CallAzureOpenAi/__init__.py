@@ -8,14 +8,14 @@ from litellm import Router
 clients = [
     AzureOpenAI(
         api_version = "2023-05-15",
-        api_key = os.getenv("AZURE_OPENAI_API_KEY"),  
-        azure_endpoint =os.getenv("AZURE_OPENAI_ENDPOINT"),
+        api_key = os.environ["AZURE_OPENAI_API_KEY_1"],  
+        azure_endpoint =os.environ["AZURE_OPENAI_ENDPOINT_2"],
         max_retries=0
     ),
     AzureOpenAI(
         api_version = "2023-05-15",
-        api_key = os.getenv("AZURE_OPENAI_API_KEY"),  
-        azure_endpoint =os.getenv("AZURE_OPENAI_ENDPOINT"),
+        api_key = os.environ["AZURE_OPENAI_API_KEY_1"],  
+        azure_endpoint =os.environ["AZURE_OPENAI_ENDPOINT_2"],
         max_retries=0
     )
 ]
@@ -41,7 +41,7 @@ async def main(req: HttpRequest) -> HttpResponse:
     router = Router(
         fallbacks=[{"azure/text-embedding-ada-002": ["azure/2-text-embedding-ada-002"]},
                    {"azure/2-text-embedding-ada-002": ["azure/text-embedding-ada-002"]}],
-        model_list=model_list,
+        model_list=clients,
         set_verbose=True,
         debug_level="DEBUG",
         num_retries=0) # you can even add debug_level="DEBUG"
@@ -52,6 +52,6 @@ async def main(req: HttpRequest) -> HttpResponse:
             model= "text-embedding-ada-002",
         )
 
-    print(response.model_dump_json(indent=2))
+    logging.info(response.model_dump_json(indent=2))
 
     return HttpResponse(f"We have used client {index}: {response.model_dump_json(indent=2)}.")

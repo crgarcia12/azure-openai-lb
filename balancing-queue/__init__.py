@@ -8,4 +8,4 @@ async def main(msg: ServiceBusMessage):
     operation_id = int(msg.get_body().decode('utf-8'))
     service = OpenAIService()
     response = await service.create_embeddings(operation_id)
-    print(f"{response}")
+    logging.info(f"{response}")
